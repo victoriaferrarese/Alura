@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+void abertura();
+
 int main(void){
 
     char palavrasecreta[20];
@@ -12,6 +14,9 @@ int main(void){
 
     char chutes[26]; //array que registra todos os chutes feitos pelo usuário.
     int tentativas = 0;
+
+    abertura();
+
     do{
 
         for(int i = 0; i < strlen(palavrasecreta); i++){ //percorre a palavrasecreta
@@ -39,4 +44,9 @@ int main(void){
         tentativas++;
 
     }while(!acertou && !enforcou); //lógica booleana : enquanto a sentença for verdadeira o loop acontece.
+}
+void abertura(){
+    printf("************************\n");
+    printf("     JOGO DA FORCA\n");
+    printf("************************\n");
 }
