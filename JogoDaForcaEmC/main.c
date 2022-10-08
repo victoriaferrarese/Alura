@@ -3,6 +3,7 @@
 #include <string.h>
 
 void abertura();
+void receberChute(chutes,tentativas);
 
 int main(void){
 
@@ -18,11 +19,12 @@ int main(void){
     abertura();
 
     do{
-
-        for(int i = 0; i < strlen(palavrasecreta); i++){ //percorre a palavrasecreta
+        //imprime a palavra secreta
+        for(int i = 0; i < strlen(palavrasecreta); i++){ 
             int achou = 0; //variável de controle para a verificação do chute
-            for(int j = 0; j < tentativas; j++){
 
+            //verifica se a letra ja foi chutada
+            for(int j = 0; j < tentativas; j++){
                 if(chutes[j] == palavrasecreta[i]){
                     achou = 1; //caso o chute esteja certo a variável de controle vira verdadeira (boolean)
                     break;
@@ -36,17 +38,23 @@ int main(void){
         }
         printf("\n");
 
-        char chute;
+        receberChute(chutes,tentativas);
+
+    }while(!acertou && !enforcou); //lógica booleana : enquanto a sentença for verdadeira o loop acontece.
+}
+
+void abertura(){
+    printf("************************\n");
+    printf("     JOGO DA FORCA\n");
+    printf("************************\n\n\n");
+}
+
+void receberChute(chutes,tentativas){
+
+    char chute;
         printf("\nChute uma letra: ");
         scanf("%c", &chute);
 
         chutes[tentativas]= chute;
         tentativas++;
-
-    }while(!acertou && !enforcou); //lógica booleana : enquanto a sentença for verdadeira o loop acontece.
-}
-void abertura(){
-    printf("************************\n");
-    printf("     JOGO DA FORCA\n");
-    printf("************************\n");
 }
