@@ -2,59 +2,63 @@
 #include <stdlib.h>
 #include <string.h>
 
+//Variáveis globais
+char palavrasecreta[20];
+int tentativas = 0;
+char chute;
+char chutes[26];
+
+//Assinaturas
 void abertura();
-void receberChute(chutes,tentativas);
+void receberChute();
+void verificarChute();
 
 int main(void){
 
-    char palavrasecreta[20];
-    sprintf(palavrasecreta, "HIPOPOTAMO"); //o array recebe "HIPOPOTAMO" como valor.
-    
-    int acertou = 0;
-    int enforcou = 0;
-
-    char chutes[26]; //array que registra todos os chutes feitos pelo usuário.
-    int tentativas = 0;
-
+    sprintf(palavrasecreta, "HIPOPOTAMO");
     abertura();
+    verificarChute();
+}
+void abertura(){
+
+    printf("*******************************\n");
+    printf("\tJOGO DA FORCA\n");
+    printf("*******************************\n");
+}
+//Recebe o chute e adiciona no array de chutes 
+void receberChute(){
+
+    printf("Escolha uma letra: ");
+    scanf("%c", &chute);
+    chutes[tentativas] = chute;
+    tentativas++;
+}
+//verifica se o chute é correto & imprime a palavra secreta 
+void verificarChute(){
+    int acertou = 0; // boolean (falso)
+    int enforcou = 0; // boolean (falso)
 
     do{
-        //imprime a palavra secreta
-        for(int i = 0; i < strlen(palavrasecreta); i++){ 
-            int achou = 0; //variável de controle para a verificação do chute
-
-            //verifica se a letra ja foi chutada
-            for(int j = 0; j < tentativas; j++){
-                if(chutes[j] == palavrasecreta[i]){
-                    achou = 1; //caso o chute esteja certo a variável de controle vira verdadeira (boolean)
+        for (int i = 0; i < strlen(palavrasecreta); i++) //percorre o array da palavra secreta
+        {
+            int achou = 0;
+            for (int j = 0; j < strlen(chutes); j++) //verifica se o chute é correto 
+            {
+                if (chutes[j] == palavrasecreta[i])
+                {
+                    achou = 1;
                     break;
                 }
             }
-            if(achou){
-                printf("%c ",palavrasecreta[i]);
-            }else {
+            if (achou){
+                printf("%c ", palavrasecreta[i]);
+            }
+            else{
                 printf("_ ");
             }
-        }
+        } 
         printf("\n");
+        receberChute();
 
-        receberChute(chutes,tentativas);
-
-    }while(!acertou && !enforcou); //lógica booleana : enquanto a sentença for verdadeira o loop acontece.
-}
-
-void abertura(){
-    printf("************************\n");
-    printf("     JOGO DA FORCA\n");
-    printf("************************\n\n\n");
-}
-
-void receberChute(chutes,tentativas){
-
-    char chute;
-        printf("\nChute uma letra: ");
-        scanf("%c", &chute);
-
-        chutes[tentativas]= chute;
-        tentativas++;
+    }while(!acertou && !enforcou); //condição booleana 
 }
