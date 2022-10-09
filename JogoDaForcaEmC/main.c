@@ -11,20 +11,23 @@ char chutes[26];
 //Assinaturas
 void abertura();
 void receberChute();
-void verificarChute();
+int verificarChute(char letra);
+void imprimirPalavra();
 
 int main(void){
 
     sprintf(palavrasecreta, "HIPOPOTAMO");
     abertura();
-    verificarChute();
+    imprimirPalavra();
 }
+
 void abertura(){
 
     printf("*******************************\n");
     printf("\tJOGO DA FORCA\n");
     printf("*******************************\n");
 }
+
 //Recebe o chute e adiciona no array de chutes 
 void receberChute(){
 
@@ -33,23 +36,29 @@ void receberChute(){
     chutes[tentativas] = chute;
     tentativas++;
 }
-//verifica se o chute é correto & imprime a palavra secreta 
-void verificarChute(){
-    int acertou = 0; // boolean (falso)
-    int enforcou = 0; // boolean (falso)
+
+//Verifica se o chute é correto
+int verificarChute(char letra){
+    int achou = 0; //varíavel booleana (falso)
+        for (int j = 0; j < strlen(chutes); j++){ //verifica se o chute é correto 
+            if (chutes[j] == letra){
+                achou = 1; //varíavel booleana (verdadeiro)
+                break;
+            }
+        }
+    return achou;
+}
+
+//Imprime a palavra secreta 
+void imprimirPalavra(){
+    int acertou = 0; // varíavel booleana (falso)
+    int enforcou = 0; // varíavel booleana (falso)
 
     do{
-        for (int i = 0; i < strlen(palavrasecreta); i++) //percorre o array da palavra secreta
-        {
-            int achou = 0;
-            for (int j = 0; j < strlen(chutes); j++) //verifica se o chute é correto 
-            {
-                if (chutes[j] == palavrasecreta[i])
-                {
-                    achou = 1;
-                    break;
-                }
-            }
+        for (int i = 0; i < strlen(palavrasecreta); i++){ //percorre o array da palavra secreta
+            
+            int achou = verificarChute(palavrasecreta[i]);
+
             if (achou){
                 printf("%c ", palavrasecreta[i]);
             }
