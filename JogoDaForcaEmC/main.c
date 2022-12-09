@@ -20,16 +20,14 @@ int main(void){
 
     sprintf(palavrasecreta, "HIPOPOTAMO");
     abertura();
+    
 
     do{
-
-        imprimirForca();
-        printf("\n");
         receberChute();
-        printf("\n");
+        imprimirForca();
 
     }while(!ganhou() && !enforcou()); //condicao booleana 
-
+    
 }
 
 void abertura(){
@@ -43,7 +41,7 @@ void abertura(){
 void receberChute(){
     char chute;
     printf("Escolha uma letra: ");
-    scanf("%c", &chute);
+    scanf(" %c", &chute); // != scanf("%c", &chute);
 
     chutes[chutesRealizados] = chute;
     chutesRealizados++;
