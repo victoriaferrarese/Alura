@@ -8,6 +8,8 @@ void receberChute();
 int verificarChute(char letra);
 void imprimirForca();
 int enforcou();
+int enforcou();
 int ganhou();
 void imprimirArteForca();
 void imprimirArteVencedor();
+void imprimirArtePerdedor();

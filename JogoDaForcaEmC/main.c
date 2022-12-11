@@ -5,6 +5,7 @@
 #include "forca.h"
 
 //Variaveis globais
+int erros = 0;
 char palavrasecreta[TAMANHO_PALAVRA];
 int chutesRealizados = 0;
 char chutes[26];
@@ -18,15 +19,16 @@ int main(void){
     do{
         receberChute();
         imprimirForca();
+        printf("%d\n", erros);
 
     }while(!ganhou() && !enforcou()); //condicao booleana: enquanto ganhou() = 0 (falso) e enforcou = 0 (falso) 
 
-    if (ganhou()){
+    if (ganhou()){  
         
         imprimirArteVencedor();
         adicionarPalavra();
 
-    }else{
+    }else if(enforcou()){
         
         imprimirArtePerdedor();
         adicionarPalavra();
@@ -148,25 +150,25 @@ int verificarChute(char letra){ //char letra = palavrasecreta[i], ou seja eh a l
 
 //Imprime a palavra secreta conforme os chutes sao feitos
 void imprimirForca(){
-    
-        for (int i = 0; i < strlen(palavrasecreta); i++){ //percorre o array da palavra secreta
-            
-            if (verificarChute(palavrasecreta[i])){ //se verificarChute = verdadeiro
-                printf("%c ", palavrasecreta[i]);
-            }else{
-                printf("_ ");
-            }
-        } 
-        printf("\n");  
-    
-}
-//contabiliza erros e verifica se o limite de erros foi atingido
-int enforcou(){ 
 
-    int erros = 0; //max = 5
+    for (int i = 0; i < strlen(palavrasecreta); i++){ //percorre o array da palavra secreta
+            
+        if (verificarChute(palavrasecreta[i])){ //se verificarChute = verdadeiro
+            printf("%c ", palavrasecreta[i]);
+        }else{
+                printf("_ ");
+        }
+    } 
+    printf("\n");  
+    //contarErros();
+    imprimirArteForca();
+}
+
+//contabiliza a quantidade de chutes errados realizados
+int contarErros(){
 
     for(int i = 0; i < chutesRealizados; i++){  
-        int existe = 0;//Variavel booleana (falso)
+    int existe = 0;//Variavel booleana (falso)
 
         for(int j = 0; j < strlen(palavrasecreta); j++){ //percorre o array da palavra secreta
             if (chutes[i] == palavrasecreta[j]){
@@ -176,8 +178,15 @@ int enforcou(){
         } 
         if (!existe) erros++;        
     }
-    return erros >= 5; //expressao booleana que retorna verdadeiro caso erros >= 5   
+    return erros;
 }
+
+//verifica se o limite de erros foi atingido
+int enforcou(){ 
+
+    return contarErros() >= 5; //expressao booleana que retorna verdadeiro caso erros >= 5   
+}
+
 //verifica se todas as letras da palavra secreta foram acertadas
 int ganhou(){
     for(int i = 0; i < strlen(palavrasecreta); i++){
@@ -190,19 +199,26 @@ int ganhou(){
 
 //imprime ascii art da forca
 void imprimirArteForca(){
-    
-    printf("\nParabens voce ganhou!\n\n");
 
-    printf("       ___________      \n");
-    printf("      '._==_==_=_.'     \n");
-    printf("      .-\\:      /-.    \n");
-    printf("     | (|:.     |) |    \n");
-    printf("      '-|:.     |-'     \n");
-    printf("        \\::.    /      \n");
-    printf("         '::. .'        \n");
-    printf("           ) (          \n");
-    printf("         _.' '._        \n");
-    printf("        '-------'       \n\n");
+    int erros = contarErros();
+    
+    printf("  _______       \n");
+    printf(" |/      |      \n");
+    printf(" |      %c%c%c  \n", (erros >= 1 ? '(' : ' '), (erros >= 1 ? '_' : ' '), (erros >= 1 ? ')' : ' '));
+    printf(" |      %c%c%c  \n", (erros >= 2 ? '\\' : ' '), (erros >= 2 ? '|': ' '), (erros >= 2 ? '/' : ' '));
+    printf(" |       %c     \n", (erros >= 3 ? '|' : ' '));
+    printf(" |      %c %c   \n", (erros >= 4 ? '/' : ' '), (erros >= 4 ? '\\' : ' '));
+    printf(" |              \n");
+    printf("_|___           \n");
+    printf("\n\n");
+
+/*if ternario: condição de if e else escrita em apenas uma linha (apenas um if e apenas um else)
+->  if(erros >= 3) {
+        printf("|");
+    }else{
+        printf(" ");
+    }
+->  em if ternario : printf("%c", (erros >= 3 ? '|' : ' ')); */
 
 }
 
@@ -214,8 +230,8 @@ void imprimirArteVencedor(){
     printf("       ___________      \n");
     printf("      '._==_==_=_.'     \n");
     printf("      .-\\:      /-.    \n");
-    printf("     | (|:.     |) |    \n");
-    printf("      '-|:.     |-'     \n");
+    printf("     | (|:.      |) |    \n");
+    printf("      '-|:.      |-'     \n");
     printf("        \\::.    /      \n");
     printf("         '::. .'        \n");
     printf("           ) (          \n");
@@ -248,3 +264,8 @@ void imprimirArtePerdedor(){
     printf("       \\_______/           \n");
 
 }
+/* BUGs :
+
+[1]: Erro na contagem de erros.
+
+*/
