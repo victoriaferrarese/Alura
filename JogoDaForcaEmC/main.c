@@ -5,13 +5,13 @@
 #include "forca.h"
 
 //Variaveis globais
-char palavrasecreta[20];
+char palavrasecreta[TAMANHO_PALAVRA];
 int chutesRealizados = 0;
 char chutes[26];
 
 int main(void){
 
-    abertura();
+    imprimirAbertura();
     selecionarPalavra();
     imprimirForca();
 
@@ -19,14 +19,22 @@ int main(void){
         receberChute();
         imprimirForca();
 
-    }while(!ganhou() && !enforcou()); //condicao booleana: enquanto ganhou() = 0 (falso) e enforcou = 0 (falso)  
+    }while(!ganhou() && !enforcou()); //condicao booleana: enquanto ganhou() = 0 (falso) e enforcou = 0 (falso) 
 
-    adicionarPalavra();
-    
+    if (ganhou()){
+        
+        imprimirArteVencedor();
+        adicionarPalavra();
+
+    }else{
+        
+        imprimirArtePerdedor();
+        adicionarPalavra();
+    }     
 }
 
 //Imprime o titulo do jogo
-void abertura(){
+void imprimirAbertura(){
 
     printf("*******************************\n");
     printf("\tJOGO DA FORCA\n");
@@ -75,7 +83,7 @@ void adicionarPalavra(){
     
     if(resposta == 'S') {
         
-        char novaPalavra[20];
+        char novaPalavra[TAMANHO_PALAVRA];
 
         printf("Digite a palavra:\n");
         scanf("%s", &novaPalavra);
@@ -178,4 +186,65 @@ int ganhou(){
         }
     }
     return 1; //se ganhou = falso 
+}
+
+//imprime ascii art da forca
+void imprimirArteForca(){
+    
+    printf("\nParabens voce ganhou!\n\n");
+
+    printf("       ___________      \n");
+    printf("      '._==_==_=_.'     \n");
+    printf("      .-\\:      /-.    \n");
+    printf("     | (|:.     |) |    \n");
+    printf("      '-|:.     |-'     \n");
+    printf("        \\::.    /      \n");
+    printf("         '::. .'        \n");
+    printf("           ) (          \n");
+    printf("         _.' '._        \n");
+    printf("        '-------'       \n\n");
+
+}
+
+//imprime ascii art do vencedor
+void imprimirArteVencedor(){
+    
+    printf("\nParabens voce ganhou!\n\n");
+
+    printf("       ___________      \n");
+    printf("      '._==_==_=_.'     \n");
+    printf("      .-\\:      /-.    \n");
+    printf("     | (|:.     |) |    \n");
+    printf("      '-|:.     |-'     \n");
+    printf("        \\::.    /      \n");
+    printf("         '::. .'        \n");
+    printf("           ) (          \n");
+    printf("         _.' '._        \n");
+    printf("        '-------'       \n\n");
+
+}
+
+//imprime ascii art do perdedor
+void imprimirArtePerdedor(){
+    
+    printf("\nPoxa, você foi enforcado!\n");
+    printf("A palavra era **%s**\n\n", palavrasecreta);
+
+    printf("    _______________         \n");
+    printf("   /               \\       \n"); 
+    printf("  /                 \\      \n");
+    printf("//                   \\/\\  \n");
+    printf("\\|   XXXX     XXXX   | /   \n");
+    printf(" |   XXXX     XXXX   |/     \n");
+    printf(" |   XXX       XXX   |      \n");
+    printf(" |                   |      \n");
+    printf(" \\__      XXX      __/     \n");
+    printf("   |\\     XXX     /|       \n");
+    printf("   | |           | |        \n");
+    printf("   | I I I I I I I |        \n");
+    printf("   |  I I I I I I  |        \n");
+    printf("   \\_             _/       \n");
+    printf("     \\_         _/         \n");
+    printf("       \\_______/           \n");
+
 }
