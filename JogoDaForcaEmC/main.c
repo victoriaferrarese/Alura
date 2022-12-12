@@ -5,7 +5,6 @@
 #include "forca.h"
 
 //Variaveis globais
-int erros = 0;
 char palavrasecreta[TAMANHO_PALAVRA];
 int chutesRealizados = 0;
 char chutes[26];
@@ -14,25 +13,25 @@ int main(void){
 
     imprimirAbertura();
     selecionarPalavra();
-    imprimirForca();
 
     do{
-        receberChute();
+
         imprimirForca();
-        printf("%d\n", erros);
+        receberChute();
 
     }while(!ganhou() && !enforcou()); //condicao booleana: enquanto ganhou() = 0 (falso) e enforcou = 0 (falso) 
 
     if (ganhou()){  
         
         imprimirArteVencedor();
-        adicionarPalavra();
 
     }else if(enforcou()){
         
         imprimirArtePerdedor();
-        adicionarPalavra();
-    }     
+        
+    }   
+
+    adicionarPalavra();  
 }
 
 //Imprime o titulo do jogo
@@ -151,21 +150,24 @@ int verificarChute(char letra){ //char letra = palavrasecreta[i], ou seja eh a l
 //Imprime a palavra secreta conforme os chutes sao feitos
 void imprimirForca(){
 
+    imprimirArteForca();
+
     for (int i = 0; i < strlen(palavrasecreta); i++){ //percorre o array da palavra secreta
             
         if (verificarChute(palavrasecreta[i])){ //se verificarChute = verdadeiro
             printf("%c ", palavrasecreta[i]);
-        }else{
+        } else{
                 printf("_ ");
         }
     } 
+
     printf("\n");  
-    //contarErros();
-    imprimirArteForca();
+
 }
 
 //contabiliza a quantidade de chutes errados realizados
 int contarErros(){
+    int erros = 0;
 
     for(int i = 0; i < chutesRealizados; i++){  
     int existe = 0;//Variavel booleana (falso)
@@ -205,12 +207,12 @@ void imprimirArteForca(){
     printf("  _______       \n");
     printf(" |/      |      \n");
     printf(" |      %c%c%c  \n", (erros >= 1 ? '(' : ' '), (erros >= 1 ? '_' : ' '), (erros >= 1 ? ')' : ' '));
-    printf(" |      %c%c%c  \n", (erros >= 2 ? '\\' : ' '), (erros >= 2 ? '|': ' '), (erros >= 2 ? '/' : ' '));
-    printf(" |       %c     \n", (erros >= 3 ? '|' : ' '));
+    printf(" |      %c%c%c  \n", (erros >= 3 ? '\\' : ' '), (erros >= 2 ? '|': ' '), (erros >= 3 ? '/' : ' '));
+    printf(" |       %c     \n", (erros >= 2 ? '|' : ' '));
     printf(" |      %c %c   \n", (erros >= 4 ? '/' : ' '), (erros >= 4 ? '\\' : ' '));
     printf(" |              \n");
     printf("_|___           \n");
-    printf("\n\n");
+    printf("\n");
 
 /*if ternario: condição de if e else escrita em apenas uma linha (apenas um if e apenas um else)
 ->  if(erros >= 3) {
@@ -243,7 +245,7 @@ void imprimirArteVencedor(){
 //imprime ascii art do perdedor
 void imprimirArtePerdedor(){
     
-    printf("\nPoxa, você foi enforcado!\n");
+    printf("\nPoxa, voce foi enforcado!\n");
     printf("A palavra era **%s**\n\n", palavrasecreta);
 
     printf("    _______________         \n");
