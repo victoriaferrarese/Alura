@@ -1,6 +1,7 @@
 //Header file : contem as assinaturas do codigo e as constantes.
 
 #define TAMANHO_PALAVRA 20
+
 void imprimirAbertura();
 void selecionarPalavra();
 void adicionarPalavra();

@@ -266,8 +266,3 @@ void imprimirArtePerdedor(){
     printf("       \\_______/           \n");
 
 }
-/* BUGs :
-
-[1]: Erro na contagem de erros.
-
-*/
