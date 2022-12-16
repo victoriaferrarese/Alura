@@ -1,11 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "pacman.h"
 
-    int linhas;
-    int colunas;
-  
-    char** mapa; //ponteiro de ponteiro
-
+struct mapa m; //declarando m : conjunto de variaveis do tipo mapa que contém matriz, lados e colunas.
+    
 int main(void){
 
     armazenarMapa();
@@ -27,11 +25,11 @@ int main(void){
 void alocarMapa(){
 
     //Alocacao dinamica de memoria
-    mapa = malloc(sizeof(char*) * linhas); 
+    m.matriz = malloc(sizeof(char*) * m.linhas); 
     /*alocando o espaco para ponteiros de caracteres (arrays, que representam as linhas). Como estou alocando ponteiros, mapa é um ponteiro de ponteiro (um ponteiro de arrays), sendo assim deve ser declarada como char** */
 
-    for(int i = 0; i < linhas; i++){
-        mapa[i] = malloc(sizeof(char) * (colunas + 1));
+    for(int i = 0; i < m.linhas; i++){
+        m.matriz[i] = malloc(sizeof(char) * (m.colunas + 1));
     }
     /* Dentro de cada um dos  arrays que foram alocados na memoria, estou alocando espaco para outros caracteres( formando assim, as colunas da matriz)*/
     /*a ultima posicao de uma matriz eh sempre o \0 (assim como um array), dessa forma eh necessario adicionar 1 na posicao da coluna da matriz */
@@ -47,11 +45,11 @@ void armazenarMapa(){
         exit(1);
     }
     
-    fscanf(f, "%d %d", &linhas, &colunas);
+    fscanf(f, "%d %d", &(m.linhas), &(m.colunas));
     alocarMapa();
 
-    for(int i = 0; i < linhas; i++){
-        fscanf(f, "%s", mapa[i]); 
+    for(int i = 0; i < m.linhas; i++){
+        fscanf(f, "%s", m.matriz[i]); 
     /*o fscanf le o arquivo e armazena a informação em uma variavel/array. Porem como vou armazenar o mapa em uma matriz, preciso passar para a função apenas uma dimensao dessa matriz (linha). Assim, o mapa sera armazenado na matriz linha por linha.
     obs: Como um array é naturalmente um ponteiro nao ha necessidade de escrever &mapa[i]*/
     }
@@ -66,10 +64,10 @@ void liberarMapa(){
 
     for(int i = 0; i < 5; i++){
         //Para cada linha v[]
-        free(mapa[i]);   
+        free(m.matriz[i]);   
     }
     //Para o ponteiro v**
-    free(mapa);
+    free(m.matriz);
 
 }
 
@@ -77,7 +75,7 @@ void liberarMapa(){
 void imprimirMapa(){
 
     for(int i = 0; i < 5; i++){
-        printf("%s\n", mapa[i]);
+        printf("%s\n", m.matriz[i]);
     }
 }
 
@@ -92,9 +90,9 @@ void mover(char direcao){
     int x;
     int y;
 
-    for (int i = 0; i < linhas; i++){
-        for(int j = 0; j < colunas; j++){
-            if (mapa[i][j] == '@'){
+    for (int i = 0; i < m.linhas; i++){
+        for(int j = 0; j < m.colunas; j++){
+            if (m.matriz[i][j] == '@'){
                 x = i;
                 y = j;
                 break;
@@ -105,17 +103,17 @@ void mover(char direcao){
     //movendo o pacman pelo mapa conforme o usuario escolhe a direcao pelo teclado
     switch(direcao){
         case 'a':
-            mapa[x][y-1] = '@';
+            m.matriz[x][y-1] = '@';
             break;
         case 'd':
-            mapa[x][y+1] = '@';
+            m.matriz[x][y+1] = '@';
             break;
         case 'w': 
-            mapa[x-1][y] = '@';
+            m.matriz[x-1][y] = '@';
             break;
         case 's':
-            mapa[x+1][y] = '@';
+            m.matriz[x+1][y] = '@';
             break;    
     }
-    mapa[x][y] = '.'; //substitui o local em que o pacman estava antes de se mover por "."
+    m.matriz[x][y] = '.'; //substitui o local em que o pacman estava antes de se mover por "."
 }
