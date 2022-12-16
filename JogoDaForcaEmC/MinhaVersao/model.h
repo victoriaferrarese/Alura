@@ -1,3 +1,3 @@
 //header do Model
 
-void escolherpalavra(char palavrasecreta[]);
+void selecionarPalavra(char palavraSecreta[]);

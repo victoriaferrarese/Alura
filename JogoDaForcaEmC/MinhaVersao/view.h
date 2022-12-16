@@ -1,3 +1,5 @@
 //header do View
 
-void imprimepalavrasecreta(char palavrasecreta[]);
+void imprimirAbertura();
+void imprimirMensagemErro();
+void imprimirPalavraSecreta(char palavraSecreta[]);
