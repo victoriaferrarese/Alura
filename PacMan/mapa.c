@@ -3,57 +3,68 @@
 #include "pacman.h"
 #include "mapa.h"
 
-//Alocacao dinamica de memoria: Alocando a matriz mapa dinamicamente na memoria
-void alocarMapa(MAPA* m){
-
-    //Alocacao dinamica de memoria
-    m->matriz = malloc(sizeof(char*) * m->linhas); 
-    /*alocando o espaco para ponteiros de caracteres (arrays, que representam as linhas). Como estou alocando ponteiros, mapa é um ponteiro de ponteiro (um ponteiro de arrays), sendo assim deve ser declarada como char** */
-
-    for(int i = 0; i < m->linhas; i++){
-        m->matriz[i] = malloc(sizeof(char) * ((*m).colunas + 1));
-    }
-    /* Dentro de cada um dos  arrays que foram alocados na memoria, estou alocando espaco para outros caracteres( formando assim, as colunas da matriz)*/
-    /*a ultima posicao de uma matriz eh sempre o \0 (assim como um array), dessa forma eh necessario adicionar 1 na posicao da coluna da matriz */
-}
-
-//armazena o mapa do arquivo "mapa.txt" na matriz mapa
+//armazenando "mapa.txt" na matriz mapa
 void armazenarMapa(MAPA* m){
+
+    //lendo o arquivo "mapa.txt"
     FILE* f;
     f = fopen("mapa.txt", "r");
 
+    //mensagem de erro
     if(f == 0){
         printf("Banco de dados indisponivel\n");
         exit(1);
     }
     
+    //armazenando a quantidade de linhas e a quantidade de colunas (presentes na primeira linha de "mapa.txt")
     fscanf(f, "%d %d", &(m->linhas), &(m->linhas));
     alocarMapa(m);
 
+    //armazenando o mapa na matriz. obs: Como um array é naturalmente um ponteiro nao ha necessidade de usar "&mapa[i]" no fscanf()
     for(int i = 0; i < m->linhas; i++){
-        fscanf(f, "%s", m->matriz[i]); 
-    /*o fscanf le o arquivo e armazena a informação em uma variavel/array. Porem como vou armazenar o mapa em uma matriz, preciso passar para a função apenas uma dimensao dessa matriz (linha). Assim, o mapa sera armazenado na matriz linha por linha.
-    obs: Como um array é naturalmente um ponteiro nao ha necessidade de escrever &mapa[i]*/
+        fscanf(f, "%s", m->matriz[i]); //armazenamento feito linha por linha (por isso eh usado somente uma dimensao da matriz no loop)
+     
     }
 
+    //fechando "mapa.txt"
     fclose(f);  
 }
 
+//Alocando dinamicamente a matriz mapa na memoria 
+void alocarMapa(MAPA* m){
+
+    /* A funcao malloc() serve para alocar memoria durante a execucao do programa, retornando um ponteiro com o endereco do inicio do espaco alocado. Ex:
+    -> int* v = malloc(sizeof(int)); //alocando um int
+    -> int* v = malloc(sizeof(int) * 10); //alocando um array tipo int de tamanho 10 */
+
+    /* Para alocar uma matriz dinamicamente, primeiro eh preciso alocar as linhas (arrays) e depois os elementos dentro de cada linha (colunas). obs: o fim de todo array é "\0", então deve ser somado 1 ao numero de colunas*/
+
+    //alocando as linhas 
+    m->matriz = malloc(sizeof(char*) * m->linhas); 
+    
+    // alocando as colunas
+    for(int i = 0; i < m->linhas; i++){
+        m->matriz[i] = malloc(sizeof(char) * (m->colunas + 1)); 
+    }
+    
+}
+
+//liberando a matriz mapa da memoria 
 void liberarMapa(MAPA* m){
 
-        /* Como foram usados dois malloc(), devemos usar dois free(), um esvazia o espaco dentro de cada linha e o outro esvazia as proprias linhas da matriz. 
-    obs: free() deve estar no fim do codigo todo*/
+    /* Para liberar uma matriz da memoria eh preciso usar duas funcoes free(), uma para liberar o conteudo dos arrays (colunas) e outra para liberar os proprios arrays (linhas)*/
 
     for(int i = 0; i < m->linhas; i++){
-        //Para cada linha v[]
+
+        //liberando as colunas
         free(m->matriz[i]);   
     }
-    //Para o ponteiro v**
+    //liberando as linhas
     free(m->matriz);
 
 }
 
-//Imprime o mapa 
+//Imprime o mapa (linha por linha)
 void imprimirMapa(MAPA* m){
 
     for(int i = 0; i < 5; i++){

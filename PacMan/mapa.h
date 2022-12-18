@@ -1,5 +1,5 @@
-//struct do tipo mapa que contem um conjunto de variaveis que sao relacionadas entre si (uma necessita da outra)
 
+//struct do tipo mapa que contem um conjunto de variaveis que sao relacionadas entre si (uma necessita da outra)
 struct mapa { //variaveis tipo mapa
     char** matriz; //ponteiro de ponteiro
     int linhas;

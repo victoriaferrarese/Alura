@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "pacman.h"
-#include "mapa.h" //contem todas as funcoes relacionadas a manipulacao do mapa
+#include "mapa.h" 
 
 MAPA m; //declarando m : conjunto de variaveis do tipo mapa que contem matriz, lados e colunas.
     
@@ -21,14 +21,15 @@ int main(void){
     liberarMapa(&m);
 }
 
+//fim de jogo
 int acabou(){
     return 0;
 }
 
-//identifica a posicao atual do pacman no mapa e o move de acordo com os comandos do usuario
+//identificando a posicao atual do pacman no mapa e o movendo de acordo com os comandos do usuario
 void mover(char direcao){
 
-    //variaveis que armazenarao as coordenadas do pacman (@)
+    //variaveis que armazenam as coordenadas do pacman (@)
     int x;
     int y;
 
@@ -42,7 +43,7 @@ void mover(char direcao){
         }
     }
 
-    //movendo o pacman pelo mapa conforme o usuario escolhe a direcao pelo teclado
+    //movendo o pacman pelo mapa conforme o usuario digita as direcoes
     switch(direcao){
         case 'a':
             m.matriz[x][y-1] = '@';
@@ -57,5 +58,7 @@ void mover(char direcao){
             m.matriz[x+1][y] = '@';
             break;    
     }
-    m.matriz[x][y] = '.'; //substitui o local em que o pacman estava antes de se mover por "."
+
+    //substituindo o local em que o pacman estava antes de se mover por "."
+    m.matriz[x][y] = '.'; 
 }
