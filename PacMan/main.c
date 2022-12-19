@@ -33,28 +33,45 @@ int fimDeJogo(){
 //movendo o pacman de acordo com os comandos do usuario
 void mover(char direcao){
 
-    //substituindo o local em que o pacman estava antes de se mover por "."
-    m.matriz[pacman.x][pacman.y] = '.'; 
+    int proximox = pacman.x;
+    int proximoy = pacman.y;
 
-    //movendo o pacman pelo mapa conforme o usuario digita as direcoes e atualizando sua posicao nova
+    //movendo o pacman pelo mapa conforme o usuario digita as direcoes 
     switch(direcao){
         case 'a':
-            m.matriz[pacman.x][pacman.y-1] = '@';
-            pacman.y--;
+            proximoy--;
             break;
         case 'd':
-            m.matriz[pacman.x][pacman.y+1] = '@';
-            pacman.y++;
+            proximoy++;
             break;
         case 'w': 
-            m.matriz[pacman.x-1][pacman.y] = '@';
-            pacman.x--;
+           proximox--;
             break;
         case 's':
-            m.matriz[pacman.x+1][pacman.y] = '@';
-            pacman.x--;
+            proximox++;
             break;    
+        default :
+            m.matriz[pacman.x][pacman.y] = '@';
     }
 
-    
+    //se posicao digitada for maior que a qtd de linhas
+    if(proximox >= m.linhas){
+        return; //a funcao mover() para de ser executada
+    }
+
+    //se posicao digitada for maior que a qtd de colunas
+    if(proximoy >= m.colunas){
+        return; //a funcao mover() para de ser executada
+    }
+
+    //se posicao digitado for uma parede
+    if(m.matriz[proximox][proximoy] != '.'){
+        return; //a funcao mover() para de ser executada
+    }
+
+    //atualizando a posicao atual e a posicao antiga do pacman
+    m.matriz[proximox][proximoy] = '@';
+    m.matriz[pacman.x][pacman.y] = '.';
+    pacman.x = proximox;
+    pacman.y = proximoy;
 }
