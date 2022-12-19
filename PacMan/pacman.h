@@ -1,5 +1,4 @@
-struct posicao {
-    
-}
-int acabou();
+//header do main.c
+
+int fimDeJogo();
 void mover(char direcao);

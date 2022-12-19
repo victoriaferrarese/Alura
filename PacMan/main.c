@@ -3,11 +3,15 @@
 #include "pacman.h"
 #include "mapa.h" 
 
-MAPA m; //declarando m : conjunto de variaveis do tipo mapa que contem matriz, lados e colunas.
-    
+//variaveis globais
+
+MAPA m; //declarando a variavel m do tipo MAPA
+POSICAO pacman; //declarando a variavel pacman do tipo posicao
+
 int main(void){
 
     armazenarMapa(&m);
+    encontrarPosicao(&m, &pacman, '@');
 
     do{
         imprimirMapa(&m);
@@ -16,49 +20,41 @@ int main(void){
         scanf(" %c", &comando);
         mover(comando);
 
-    }while(!acabou());
+    }while(!fimDeJogo());
 
     liberarMapa(&m);
 }
 
 //fim de jogo
-int acabou(){
+int fimDeJogo(){
     return 0;
 }
 
-//identificando a posicao atual do pacman no mapa e o movendo de acordo com os comandos do usuario
+//movendo o pacman de acordo com os comandos do usuario
 void mover(char direcao){
 
-    //variaveis que armazenam as coordenadas do pacman (@)
-    int x;
-    int y;
+    //substituindo o local em que o pacman estava antes de se mover por "."
+    m.matriz[pacman.x][pacman.y] = '.'; 
 
-    for (int i = 0; i < m.linhas; i++){
-        for(int j = 0; j < m.colunas; j++){
-            if (m.matriz[i][j] == '@'){
-                x = i;
-                y = j;
-                break;
-            }
-        }
-    }
-
-    //movendo o pacman pelo mapa conforme o usuario digita as direcoes
+    //movendo o pacman pelo mapa conforme o usuario digita as direcoes e atualizando sua posicao nova
     switch(direcao){
         case 'a':
-            m.matriz[x][y-1] = '@';
+            m.matriz[pacman.x][pacman.y-1] = '@';
+            pacman.y--;
             break;
         case 'd':
-            m.matriz[x][y+1] = '@';
+            m.matriz[pacman.x][pacman.y+1] = '@';
+            pacman.y++;
             break;
         case 'w': 
-            m.matriz[x-1][y] = '@';
+            m.matriz[pacman.x-1][pacman.y] = '@';
+            pacman.x--;
             break;
         case 's':
-            m.matriz[x+1][y] = '@';
+            m.matriz[pacman.x+1][pacman.y] = '@';
+            pacman.x--;
             break;    
     }
 
-    //substituindo o local em que o pacman estava antes de se mover por "."
-    m.matriz[x][y] = '.'; 
+    
 }

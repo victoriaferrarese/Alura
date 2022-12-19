@@ -1,7 +1,22 @@
+//esse arquivo contem todas as funcoes relacionadas ao mapa (armazenar, alocar e liberar)
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "pacman.h"
 #include "mapa.h"
+
+/* A variavel m (tipo MAPA) eh declarada no main, sendo assim esse arquivo nao a reconhece a nao ser que seja passado, como parametro, o endereco de memoria dela para cada funcao que ira acessa-la. Ex:
+Main:
+- armazenarMapa(&m); //manda o endereco
+Mapa.c:
+- void armazenarMapa(MAPA* m); //ponteiro que recebe o endereco */
+
+/* Sendo assim, como m eh um ponteiro (MAPA* m), sempre que m for acessado devera ser tratado como tal. Ou seja, ao inves de: fscanf(f, "%d %d", &(m.linhas), &(m.colunas)), usamos: fscanf(f, "%d %d", &((m*).linhas), &((m*).colunas));
+
+Porem existe uma maneira mais facil de representar (m*).linhas ou (m*).colunas, usando ->. Ex: 
+- m->linhas
+- m->colunas
+- m->matriz */
 
 //armazenando "mapa.txt" na matriz mapa
 void armazenarMapa(MAPA* m){
@@ -17,7 +32,7 @@ void armazenarMapa(MAPA* m){
     }
     
     //armazenando a quantidade de linhas e a quantidade de colunas (presentes na primeira linha de "mapa.txt")
-    fscanf(f, "%d %d", &(m->linhas), &(m->linhas));
+    fscanf(f, "%d %d", &(m->linhas), &(m->colunas));
     alocarMapa(m);
 
     //armazenando o mapa na matriz. obs: Como um array é naturalmente um ponteiro nao ha necessidade de usar "&mapa[i]" no fscanf()
@@ -70,4 +85,19 @@ void imprimirMapa(MAPA* m){
     for(int i = 0; i < 5; i++){
         printf("%s\n", m->matriz[i]);
     }
+}
+
+//identificando a posicao atual do pacman no mapa
+void encontrarPosicao(MAPA* m, POSICAO* p, char c){
+
+    for (int i = 0; i < m->linhas; i++){
+        for(int j = 0; j < m->colunas; j++){
+            if (m->matriz[i][j] == c){
+                p->x = i;
+                p->y = j;
+                break;
+            }
+        }
+    }
+
 }
