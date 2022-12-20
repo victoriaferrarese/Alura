@@ -4,6 +4,7 @@
 #define VAZIO '.'
 #define PAREDE_VERTICAL '|'
 #define PAREDE_HORIZONTAL '-'
+#define FANTASMA 'o'
 
 /*Structs são uma maneira de agrupar diversas variaveis que se relacionam entre si em um unico lugar. Além disso ao inves de declarar cada uma das variaveis presentes na struct no main, basta declarar uma variavel do tipo mapa */
 
@@ -39,4 +40,5 @@ void imprimirMapa(MAPA* m);
 void encontrarPacman(MAPA* m, POSICAO* p, char c);
 int posicaoExistente(MAPA* m, int x, int y);
 int posicaoDisponivel(MAPA* m, int x, int y);
-void moverPersonagem(MAPA* m, int destinox, int destinoy,POSICAO* p);
+void moverPersonagem(MAPA* m, int destinox, int destinoy,int origemx, int origemy);
+void copiarMapa(MAPA* copia, MAPA* original);

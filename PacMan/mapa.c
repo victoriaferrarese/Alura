@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "pacman.h"
 #include "mapa.h"
 
@@ -119,14 +120,28 @@ int posicaoDisponivel(MAPA* m, int x, int y){
 }
 
 //Movendo os personagens pelo mapa 
-void moverPersonagem(MAPA* m, int destinox, int destinoy,POSICAO* p){
+void moverPersonagem(MAPA* m, int destinox, int destinoy,int origemx, int origemy){
 
     //armazenando o caractere do personagem
-    char personagem = m->matriz[p->x][p->y];
+    char personagem = m->matriz[origemx][origemy];
     //movendo o personagem e zerando sua posicao antiga
     m->matriz[destinox][destinoy] = personagem;
-    m->matriz[p->x][p->y] = VAZIO;
+    m->matriz[origemx][origemy] = VAZIO;
 
-    p->x = destinox;
-    p->y = destinoy;
+    origemx = destinox;
+    origemy = destinoy;
+}
+
+//fazendo uma copia do mapa original
+void copiarMapa(MAPA* copia, MAPA* original){
+    original->linhas = copia->linhas;
+    original->colunas = copia->colunas;
+
+    alocarMapa(copia);
+
+    for(int i = 0; i < original->linhas; i++){
+
+        //copiando as strings da matriz original para a copia
+        strcpy(original->matriz[i], copia ->matriz[i]);
+    }
 }

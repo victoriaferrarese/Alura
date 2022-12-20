@@ -6,4 +6,5 @@
 #define ESQUERDA 'a'
 
 int fimDeJogo();
-void mover(char direcao);
+void moverPacman(char direcao);
+void moverFantasma();

@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "pacman.h"
 #include "mapa.h" 
 
 //variaveis globais
 
 MAPA m; //declarando a variavel m do tipo MAPA
+MAPA copia;
 POSICAO pacman; //declarando a variavel pacman do tipo posicao
 
 int main(void){
@@ -18,7 +20,8 @@ int main(void){
 
         char comando;
         scanf(" %c", &comando);
-        mover(comando);
+        moverPacman(comando);
+        moverFantasma();
 
     }while(!fimDeJogo());
 
@@ -31,7 +34,7 @@ int fimDeJogo(){
 }
 
 //movendo o pacman de acordo com os comandos do usuario
-void mover(char direcao){
+void moverPacman(char direcao){
 
     int proximox = pacman.x;
     int proximoy = pacman.y;
@@ -61,6 +64,22 @@ void mover(char direcao){
         return; //a funcao mover() para de ser executada
     }
     
-    moverPersonagem(&m, proximox, proximoy, &pacman);
+    moverPersonagem(&m, proximox, proximoy, pacman.x, pacman.y);
+}
+//Movendo os fantasmas para a direita(se possivel). obs:para fazer os fantasmas andarem é preciso um mapa auxiliar -> copiarMapa()
+void moverFantasma(){
+
+    copiarMapa(&copia, &m);
+
+    for(int i = 0; i < m.linhas; i++){
+        for( int j = 0; j < m.colunas; j++){
+
+            if(copia.matriz[i][j] == FANTASMA){
+                if(posicaoDisponivel(&m, i, j+1) && posicaoExistente(&m, i, j+1)){
+                    moverPersonagem(&m, i, j, i, j+1);
+                }
+            }
+        }
+    }
 }
 
