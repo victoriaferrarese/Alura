@@ -11,7 +11,7 @@ POSICAO pacman; //declarando a variavel pacman do tipo posicao
 int main(void){
 
     armazenarMapa(&m);
-    encontrarPosicao(&m, &pacman, '@');
+    encontrarPacman(&m, &pacman, '@');
 
     do{
         imprimirMapa(&m);
@@ -54,24 +54,13 @@ void mover(char direcao){
             m.matriz[pacman.x][pacman.y] = '@';
     }
 
-    //se posicao digitada for maior que a qtd de linhas
-    if(proximox >= m.linhas){
+    if(!posicaoExistente(&m, proximox, proximoy))
+        return; //a funcao mover() para de ser executada
+
+    if(!posicaoDisponivel(&m, proximox, proximoy)){
         return; //a funcao mover() para de ser executada
     }
-
-    //se posicao digitada for maior que a qtd de colunas
-    if(proximoy >= m.colunas){
-        return; //a funcao mover() para de ser executada
-    }
-
-    //se posicao digitado for uma parede
-    if(m.matriz[proximox][proximoy] != '.'){
-        return; //a funcao mover() para de ser executada
-    }
-
-    //atualizando a posicao atual e a posicao antiga do pacman
-    m.matriz[proximox][proximoy] = '@';
-    m.matriz[pacman.x][pacman.y] = '.';
-    pacman.x = proximox;
-    pacman.y = proximoy;
+    
+    moverPersonagem(&m, proximox, proximoy, &pacman);
 }
+

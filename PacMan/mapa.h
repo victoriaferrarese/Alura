@@ -31,4 +31,7 @@ void armazenarMapa(MAPA* m);
 void alocarMapa(MAPA* m);
 void liberarMapa(MAPA* m);
 void imprimirMapa(MAPA* m);
-void encontrarPosicao(MAPA* m, POSICAO* p, char c);
+void encontrarPacman(MAPA* m, POSICAO* p, char c);
+int posicaoExistente(MAPA* m, int x, int y);
+int posicaoDisponivel(MAPA* m, int x, int y);
+void moverPersonagem(MAPA* m, int destinox, int destinoy,POSICAO* p);

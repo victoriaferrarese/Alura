@@ -60,8 +60,7 @@ void alocarMapa(MAPA* m){
     // alocando as colunas
     for(int i = 0; i < m->linhas; i++){
         m->matriz[i] = malloc(sizeof(char) * (m->colunas + 1)); 
-    }
-    
+    } 
 }
 
 //liberando a matriz mapa da memoria 
@@ -76,7 +75,6 @@ void liberarMapa(MAPA* m){
     }
     //liberando as linhas
     free(m->matriz);
-
 }
 
 //Imprime o mapa (linha por linha)
@@ -88,7 +86,7 @@ void imprimirMapa(MAPA* m){
 }
 
 //identificando a posicao atual do pacman no mapa
-void encontrarPosicao(MAPA* m, POSICAO* p, char c){
+void encontrarPacman(MAPA* m, POSICAO* p, char c){
 
     for (int i = 0; i < m->linhas; i++){
         for(int j = 0; j < m->colunas; j++){
@@ -99,5 +97,36 @@ void encontrarPosicao(MAPA* m, POSICAO* p, char c){
             }
         }
     }
+}
 
+//Verifica se a posicao desejada existe
+int posicaoExistente(MAPA* m, int x, int y){
+    //se posicao digitada for maior que a qtd de linhas
+    if(x >= m->linhas)
+        return 0; 
+    
+    //se posicao digitada for maior que a qtd de colunas
+    if(y >= m->colunas)
+        return 0; 
+
+    return 1;
+}
+
+//verifica se a proxima posicao do pacman eh um local disponivel (nao eh uma parede)
+int posicaoDisponivel(MAPA* m, int x, int y){
+    
+    return m->matriz[x][y] == '.'; //retorna verdadeiro se a condicao for verdadeira 
+}
+
+//Movendo os personagens pelo mapa 
+void moverPersonagem(MAPA* m, int destinox, int destinoy,POSICAO* p){
+
+    //armazenando o caractere do personagem
+    char personagem = m->matriz[p->x][p->y];
+    //movendo o personagem e zerando sua posicao antiga
+    m->matriz[destinox][destinoy] = personagem;
+    m->matriz[p->x][p->y] = '.';
+
+    p->x = destinox;
+    p->y = destinoy;
 }
