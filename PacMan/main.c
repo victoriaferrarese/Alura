@@ -11,7 +11,7 @@ POSICAO pacman; //declarando a variavel pacman do tipo posicao
 int main(void){
 
     armazenarMapa(&m);
-    encontrarPacman(&m, &pacman, '@');
+    encontrarPacman(&m, &pacman, PACMAN);
 
     do{
         imprimirMapa(&m);
@@ -38,20 +38,20 @@ void mover(char direcao){
 
     //movendo o pacman pelo mapa conforme o usuario digita as direcoes 
     switch(direcao){
-        case 'a':
+        case ESQUERDA:
             proximoy--;
             break;
-        case 'd':
+        case DIREITA:
             proximoy++;
             break;
-        case 'w': 
+        case CIMA: 
            proximox--;
             break;
-        case 's':
+        case BAIXO:
             proximox++;
             break;    
         default :
-            m.matriz[pacman.x][pacman.y] = '@';
+            m.matriz[pacman.x][pacman.y] = PACMAN;
     }
 
     if(!posicaoExistente(&m, proximox, proximoy))

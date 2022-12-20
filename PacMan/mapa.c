@@ -115,7 +115,7 @@ int posicaoExistente(MAPA* m, int x, int y){
 //verifica se a proxima posicao do pacman eh um local disponivel (nao eh uma parede)
 int posicaoDisponivel(MAPA* m, int x, int y){
     
-    return m->matriz[x][y] == '.'; //retorna verdadeiro se a condicao for verdadeira 
+    return m->matriz[x][y] == VAZIO; //retorna verdadeiro se a condicao for verdadeira 
 }
 
 //Movendo os personagens pelo mapa 
@@ -125,7 +125,7 @@ void moverPersonagem(MAPA* m, int destinox, int destinoy,POSICAO* p){
     char personagem = m->matriz[p->x][p->y];
     //movendo o personagem e zerando sua posicao antiga
     m->matriz[destinox][destinoy] = personagem;
-    m->matriz[p->x][p->y] = '.';
+    m->matriz[p->x][p->y] = VAZIO;
 
     p->x = destinox;
     p->y = destinoy;
