@@ -1,10 +1,11 @@
 //header de mapa.c
 
 #define PACMAN '@'
+#define FANTASMA 'o'
 #define VAZIO '.'
 #define PAREDE_VERTICAL '|'
 #define PAREDE_HORIZONTAL '-'
-#define FANTASMA 'o'
+
 
 /*Structs são uma maneira de agrupar diversas variaveis que se relacionam entre si em um unico lugar. Além disso ao inves de declarar cada uma das variaveis presentes na struct no main, basta declarar uma variavel do tipo mapa */
 

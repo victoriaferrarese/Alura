@@ -60,7 +60,7 @@ void alocarMapa(MAPA* m){
     
     // alocando as colunas
     for(int i = 0; i < m->linhas; i++){
-        m->matriz[i] = malloc(sizeof(char) * (m->colunas + 1)); 
+        m->matriz[i] = malloc(sizeof(char) * m->colunas + 1); 
     } 
 }
 
@@ -127,21 +127,20 @@ void moverPersonagem(MAPA* m, int destinox, int destinoy,int origemx, int origem
     //movendo o personagem e zerando sua posicao antiga
     m->matriz[destinox][destinoy] = personagem;
     m->matriz[origemx][origemy] = VAZIO;
-
-    origemx = destinox;
-    origemy = destinoy;
 }
 
 //fazendo uma copia do mapa original
-void copiarMapa(MAPA* copia, MAPA* original){
-    original->linhas = copia->linhas;
-    original->colunas = copia->colunas;
+void copiarMapa(MAPA* destino, MAPA* origem){
+    
+    origem->linhas = destino->linhas;
+    origem->colunas = destino->colunas;
+    
+    alocarMapa(destino);
 
-    alocarMapa(copia);
-
-    for(int i = 0; i < original->linhas; i++){
+    for(int i = 0; i < origem->linhas; i++){
 
         //copiando as strings da matriz original para a copia
-        strcpy(original->matriz[i], copia ->matriz[i]);
+        strcpy(destino->matriz[i], origem->matriz[i]);
     }
 }
+ 
