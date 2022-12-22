@@ -87,17 +87,18 @@ void imprimirMapa(MAPA* m){
 }
 
 //identificando a posicao atual do pacman no mapa
-void encontrarPacman(MAPA* m, POSICAO* p, char c){
+int encontrarPacman(MAPA* m, POSICAO* p, char c){
 
     for (int i = 0; i < m->linhas; i++){
         for(int j = 0; j < m->colunas; j++){
             if (m->matriz[i][j] == c){
                 p->x = i;
                 p->y = j;
-                return;
+                return 1; //encontrou
             }
         }
     }
+    return 0; //nao encontrou
 }
 
 //Verifica se a posicao desejada existe
@@ -119,6 +120,12 @@ int posicaoDisponivel(MAPA* m, int x, int y){
     return m->matriz[x][y] == VAZIO; //retorna verdadeiro se a condicao for verdadeira 
 }
 
+//Agrupando as funcoes posicaoExistente e posicaoDisponivel
+int movimentoValido(MAPA* m, int x, int y){
+    return
+        posicaoExistente(m, x, y) && posicaoDisponivel(m, x, y);
+
+}
 //Movendo os personagens pelo mapa 
 void moverPersonagem(MAPA* m, int destinox, int destinoy,int origemx, int origemy){
 

@@ -21,7 +21,6 @@ int main(void){
     do{
         imprimirMapa(&m);
         
-
         char comando;
         scanf(" %c", &comando);
         
@@ -36,9 +35,13 @@ int main(void){
 
 //fim de jogo
 int fimDeJogo(){
-    return 0;
+    POSICAO pos; //criado somente porque a funcao encontrarPacMan precisa de um parametro desse
+    int pacmanExiste = encontrarPacman(&m, &pos, PACMAN);
+
+    return !pacmanExiste; //se o pacman morreu o jogo acaba
 }
 
+//declarando as possiveis direcoes para o Pacman
 int direcaoValida(char direcao){
     return direcao == CIMA || direcao == BAIXO || direcao == ESQUERDA || direcao == DIREITA;
 }
@@ -68,10 +71,7 @@ void moverPacman(char direcao){
             break;    
     }
 
-    if(!posicaoExistente(&m, proximox, proximoy))
-        return; //a funcao mover() para de ser executada
-
-    if(!posicaoDisponivel(&m, proximox, proximoy))
+    if(!movimentoValido(&m, proximox, proximoy))
         return; //a funcao mover() para de ser executada
     
     moverPersonagem(&m, proximox, proximoy, pacman.x, pacman.y);
@@ -117,7 +117,7 @@ int direcaoFantasma(int x, int y, int* destinox, int* destinoy){
     for(int i = 0; i < 10; i++){
         int posicao = rand() % 4;
 
-        if(posicaoExistente(&m, opcoes[posicao][0], opcoes[0][posicao]) && posicaoDisponivel(&m, opcoes[posicao][0], opcoes[posicao][1])){
+        if(movimentoValido(&m, opcoes[posicao][0], opcoes[0][posicao])){
 
             //destinox e destinoy recebem as coordenadas da prox posicao do fantasma
             *destinox = opcoes[posicao][0];
