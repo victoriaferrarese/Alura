@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "pacman.h"
 #include "mapa.h" 
 
@@ -76,8 +77,7 @@ void moverPacman(char direcao){
     moverPersonagem(&m, proximox, proximoy, pacman.x, pacman.y);
     
     pacman.x = proximox;
-    pacman.y = proximoy;
-    
+    pacman.y = proximoy; 
 }
 
 //Movendo os fantasmas para a direita(se possivel). obs:para fazer os fantasmas andarem é preciso um mapa auxiliar: copiarMapa()
@@ -90,9 +90,15 @@ void moverFantasma(){
         for(int j = 0; j < m.colunas; j++){
 
             if(copia.matriz[i][j] == FANTASMA){
-                if(posicaoExistente(&m, i, j+1) && posicaoDisponivel(&m, i, j+1)){
-                    moverPersonagem(&m, i, j+1, i, j);
-                    
+
+                int destinox;
+                int destinoy;
+
+                int destinoFantasma = direcaoFantasma(i, j, &destinox, &destinoy);
+
+                //se destinoFantasma = verdadeiro
+                if(destinoFantasma) {
+                    moverPersonagem(&m, destinox, destinoy,i, j);
                 }
             }
         }
@@ -100,3 +106,24 @@ void moverFantasma(){
     liberarMapa(&copia);
 }
 
+//sorteando a proxima posicao do fantasma
+int direcaoFantasma(int x, int y, int* destinox, int* destinoy){
+
+    //declarando uma matriz com todas as opcoes possiveis de movimentos (esq., dir., cima e baixo)
+    int opcoes [4][2] ={ {x,y+1}, {x,y-1}, {x+1,y}, {x-1,y} };
+
+    //sorteando 10 vezes uma posicao
+    srand(time(NULL)); 
+    for(int i = 0; i < 10; i++){
+        int posicao = rand() % 4;
+
+        if(posicaoExistente(&m, opcoes[posicao][0], opcoes[0][posicao]) && posicaoDisponivel(&m, opcoes[posicao][0], opcoes[posicao][1])){
+
+            //destinox e destinoy recebem as coordenadas da prox posicao do fantasma
+            *destinox = opcoes[posicao][0];
+            *destinoy = opcoes[posicao][1];
+
+            return 1;
+        }
+    }
+}   
