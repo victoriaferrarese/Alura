@@ -13,19 +13,20 @@ POSICAO pacman; //declarando a variavel pacman do tipo posicao
 int main(void){
 
     armazenarMapa(&m);
-    //printf("\nmapa armazenado");
+    
     encontrarPacman(&m, &pacman, PACMAN);
-    //printf("\npacman encontrado\n");
+    
 
     do{
         imprimirMapa(&m);
-        //printf("\nmapa impresso");
+        
 
         char comando;
         scanf(" %c", &comando);
-        //printf("\ncomando recebido");
+        
         moverPacman(comando);
         moverFantasma();
+        printf("\nmovido\n");
 
     }while(!fimDeJogo());
 
@@ -46,7 +47,7 @@ void moverPacman(char direcao){
 
     if(!direcaoValida(direcao))
         return;
-    //printf("\ndirecao valida");
+
     int proximox = pacman.x;
     int proximoy = pacman.y;
 
@@ -68,14 +69,12 @@ void moverPacman(char direcao){
 
     if(!posicaoExistente(&m, proximox, proximoy))
         return; //a funcao mover() para de ser executada
-    //printf("\n posicao existe");
 
     if(!posicaoDisponivel(&m, proximox, proximoy))
         return; //a funcao mover() para de ser executada
-    //printf("\n posicao disponivel");
     
     moverPersonagem(&m, proximox, proximoy, pacman.x, pacman.y);
-    //printf("\npersonagem movido");
+    
     pacman.x = proximox;
     pacman.y = proximoy;
     
@@ -86,13 +85,14 @@ void moverFantasma(){
     MAPA copia;
 
     copiarMapa(&copia, &m);
-    printf("\nmapa copiado\n");
+    
     for(int i = 0; i < m.linhas; i++){
         for(int j = 0; j < m.colunas; j++){
 
             if(copia.matriz[i][j] == FANTASMA){
-                if(posicaoDisponivel(&m, i, j+1) && posicaoExistente(&m, i, j+1)){
-                    moverPersonagem(&m, i, j, i, j+1);
+                if(posicaoExistente(&m, i, j+1) && posicaoDisponivel(&m, i, j+1)){
+                    moverPersonagem(&m, i, j+1, i, j);
+                    
                 }
             }
         }
