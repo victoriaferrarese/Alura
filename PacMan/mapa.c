@@ -56,8 +56,8 @@ void alocarMapa(MAPA* m){
     /* Para alocar uma matriz dinamicamente, primeiro eh preciso alocar as linhas (arrays) e depois os elementos dentro de cada linha (colunas). obs: o fim de todo array é "\0", então deve ser somado 1 ao numero de colunas*/
 
     //alocando as linhas 
-    m->matriz = malloc(sizeof(char*) * m->linhas); 
-    
+    m->matriz = malloc(sizeof(char*) * m->linhas);
+
     // alocando as colunas
     for(int i = 0; i < m->linhas; i++){
         m->matriz[i] = malloc(sizeof(char) * m->colunas + 1); 
@@ -81,7 +81,7 @@ void liberarMapa(MAPA* m){
 //Imprime o mapa (linha por linha)
 void imprimirMapa(MAPA* m){
 
-    for(int i = 0; i < 5; i++){
+    for(int i = 0; i < m->linhas; i++){
         printf("%s\n", m->matriz[i]);
     }
 }
@@ -94,7 +94,7 @@ void encontrarPacman(MAPA* m, POSICAO* p, char c){
             if (m->matriz[i][j] == c){
                 p->x = i;
                 p->y = j;
-                break;
+                return;
             }
         }
     }
@@ -132,8 +132,8 @@ void moverPersonagem(MAPA* m, int destinox, int destinoy,int origemx, int origem
 //fazendo uma copia do mapa original
 void copiarMapa(MAPA* destino, MAPA* origem){
     
-    origem->linhas = destino->linhas;
-    origem->colunas = destino->colunas;
+    destino->linhas = origem->linhas;
+    destino->colunas = origem->colunas;
     
     alocarMapa(destino);
 
