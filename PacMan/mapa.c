@@ -120,12 +120,24 @@ int posicaoDisponivel(MAPA* m, int x, int y){
     return m->matriz[x][y] == VAZIO; //retorna verdadeiro se a condicao for verdadeira 
 }
 
-//Agrupando as funcoes posicaoExistente e posicaoDisponivel
-int movimentoValido(MAPA* m, int x, int y){
-    return
-        posicaoExistente(m, x, y) && posicaoDisponivel(m, x, y);
-
+//retornando se o movimento eh valido: a posicao existe na matriz, nao eh uma matriz 
+int movimentoValido(MAPA* m, int x, int y, char personagem){
+    return posicaoExistente(m, x, y) && !encontrarParede(m, x, y) && !encontrarPersonagem(m, x, y, personagem);
 }
+
+//encontrando as paredes do mapa
+int encontrarParede(MAPA* m, int x , int y){
+    return 
+        m->matriz[x][y] == PAREDE_HORIZONTAL ||
+        m->matriz[x][y] == PAREDE_VERTICAL;
+}
+
+//encontrando os personagens iguais no mapa
+int encontrarPersonagem(MAPA* m, int x, int y, char personagem){
+    return 
+        m->matriz[x][y] == personagem;
+}
+
 //Movendo os personagens pelo mapa 
 void moverPersonagem(MAPA* m, int destinox, int destinoy,int origemx, int origemy){
 

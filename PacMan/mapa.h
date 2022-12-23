@@ -2,6 +2,7 @@
 
 #define PACMAN '@'
 #define FANTASMA 'o'
+#define PILULA '0'
 #define VAZIO '.'
 #define PAREDE_VERTICAL '|'
 #define PAREDE_HORIZONTAL '-'
@@ -41,6 +42,8 @@ void imprimirMapa(MAPA* m);
 int encontrarPacman(MAPA* m, POSICAO* p, char c);
 int posicaoExistente(MAPA* m, int x, int y);
 int posicaoDisponivel(MAPA* m, int x, int y);
-int movimentoValido(MAPA* m, int x, int y);
+int movimentoValido(MAPA* m, int x, int y, char personagem);
+int encontrarParede(MAPA* m, int x , int y);
+int encontrarPersonagem(MAPA* m, int x, int y, char personagem);
 void moverPersonagem(MAPA* m, int destinox, int destinoy,int origemx, int origemy);
 void copiarMapa(MAPA* copia, MAPA* original);

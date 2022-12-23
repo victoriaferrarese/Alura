@@ -11,14 +11,17 @@ MAPA m; //declarando a variavel m do tipo MAPA
 
 POSICAO pacman; //declarando a variavel pacman do tipo posicao
 
+int possuiPipula = 0;
+
 int main(void){
 
     armazenarMapa(&m);
     
     encontrarPacman(&m, &pacman, PACMAN);
     
-
     do{
+
+        printf("Pilulas: %s\n", (possuiPipula ? "SIM" : "NAO"));
         imprimirMapa(&m);
         
         char comando;
@@ -26,7 +29,6 @@ int main(void){
         
         moverPacman(comando);
         moverFantasma();
-        printf("\nmovido\n");
 
     }while(!fimDeJogo());
 
@@ -71,8 +73,12 @@ void moverPacman(char direcao){
             break;    
     }
 
-    if(!movimentoValido(&m, proximox, proximoy))
+    if(!movimentoValido(&m, proximox, proximoy, PACMAN))
         return; //a funcao mover() para de ser executada
+    
+    //confere se o Pacman encontrou uma pilula
+    if(encontrarPersonagem(&m, proximox, proximoy, PILULA))
+        possuiPipula = 1;
     
     moverPersonagem(&m, proximox, proximoy, pacman.x, pacman.y);
     
@@ -117,7 +123,7 @@ int direcaoFantasma(int x, int y, int* destinox, int* destinoy){
     for(int i = 0; i < 10; i++){
         int posicao = rand() % 4;
 
-        if(movimentoValido(&m, opcoes[posicao][0], opcoes[0][posicao])){
+        if(movimentoValido(&m, opcoes[posicao][0], opcoes[0][posicao], FANTASMA)){
 
             //destinox e destinoy recebem as coordenadas da prox posicao do fantasma
             *destinox = opcoes[posicao][0];
