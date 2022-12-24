@@ -119,11 +119,11 @@ int direcaoFantasma(int x, int y, int* destinox, int* destinoy){
     int opcoes [4][2] ={ {x,y+1}, {x,y-1}, {x+1,y}, {x-1,y} };
 
     //sorteando 10 vezes uma posicao
-    srand(time(NULL)); 
+    srand(time(0)); 
     for(int i = 0; i < 10; i++){
         int posicao = rand() % 4;
 
-        if(movimentoValido(&m, opcoes[posicao][0], opcoes[0][posicao], FANTASMA)){
+        if(movimentoValido(&m, opcoes[posicao][0], opcoes[posicao][1], FANTASMA)){
 
             //destinox e destinoy recebem as coordenadas da prox posicao do fantasma
             *destinox = opcoes[posicao][0];
