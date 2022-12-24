@@ -3,6 +3,7 @@
 #define PACMAN '@'
 #define FANTASMA 'o'
 #define PILULA '0'
+#define BOMBA 'b'
 #define VAZIO '.'
 #define PAREDE_VERTICAL '|'
 #define PAREDE_HORIZONTAL '-'

@@ -28,6 +28,7 @@ int main(void){
         scanf(" %c", &comando);
         
         moverPacman(comando);
+        if(comando == BOMBA) explodirPilula();
         moverFantasma();
 
     }while(!fimDeJogo());
@@ -133,3 +134,16 @@ int direcaoFantasma(int x, int y, int* destinox, int* destinoy){
         }
     }
 }   
+//explodindo a pipula que o pacman pegou no mapa
+void explodirPilula(){
+    
+    for(int i = 0; i <= 3; i++){
+        if(posicaoExistente(&m, pacman.x, pacman.y+i) ) {
+            
+            if(encontrarParede(&m, pacman.x, pacman.y)) 
+                break;
+            
+            m.matriz[pacman.x][pacman.y+i] = VAZIO;
+        }
+    }
+}
