@@ -28,7 +28,7 @@ int main(void){
         scanf(" %c", &comando);
         
         moverPacman(comando);
-        if(comando == BOMBA) explodirPilula();
+        if(comando == BOMBA) explodirPilula(pacman.x, pacman.y, 3);
         moverFantasma();
 
     }while(!fimDeJogo());
@@ -134,16 +134,20 @@ int direcaoFantasma(int x, int y, int* destinox, int* destinoy){
         }
     }
 }   
-//explodindo a pipula que o pacman pegou no mapa
-void explodirPilula(){
+
+//funcao reursiva: explodindo a pipula que o pacman pegou no mapa
+void explodirPilula(int x, int y, int qtd){
     
-    for(int i = 0; i <= 3; i++){
-        if(posicaoExistente(&m, pacman.x, pacman.y+i) ) {
-            
-            if(encontrarParede(&m, pacman.x, pacman.y)) 
-                break;
-            
-            m.matriz[pacman.x][pacman.y+i] = VAZIO;
-        }
-    }
+    //a funcao só para de se chamar quando o valor de "qtd" chegar a 0
+    if(qtd == 0) return;
+    
+    if(!posicaoExistente(&m, x, y)) return;
+    if(encontrarParede(&m, x, y)) return;
+
+    //apagando posicao a direita do pacman
+    m.matriz[x][y+1] = VAZIO;
+
+    //chamando a propria funcao e diminuindo o valor de qtd
+    explodirPilula(x, y+1, qtd-1);
+        
 }
