@@ -1,5 +1,9 @@
 //header de mapa.c
 
+//Diretivas de compilacao (explicacao no arquivo ui.h)
+#ifndef _MAPA_H_
+#define _MAPA_H_
+
 #define PACMAN '@'
 #define FANTASMA 'o'
 #define PILULA '0'
@@ -39,7 +43,6 @@ typedef struct posicao POSICAO;
 void armazenarMapa(MAPA* m);
 void alocarMapa(MAPA* m);
 void liberarMapa(MAPA* m);
-void imprimirMapa(MAPA* m);
 int encontrarPacman(MAPA* m, POSICAO* p, char c);
 int posicaoExistente(MAPA* m, int x, int y);
 int posicaoDisponivel(MAPA* m, int x, int y);
@@ -48,3 +51,5 @@ int encontrarParede(MAPA* m, int x , int y);
 int encontrarPersonagem(MAPA* m, int x, int y, char personagem);
 void moverPersonagem(MAPA* m, int destinox, int destinoy,int origemx, int origemy);
 void copiarMapa(MAPA* copia, MAPA* original);
+
+#endif
