@@ -4,6 +4,7 @@
 #include <time.h>
 #include "pacman.h"
 #include "mapa.h" 
+#include "ui.h"
 
 //variaveis globais
 
@@ -28,7 +29,7 @@ int main(void){
         scanf(" %c", &comando);
         
         moverPacman(comando);
-        if(comando == BOMBA) explodirPilula(pacman.x, pacman.y, 3);
+        if(comando == BOMBA) definirExplosaoPilula();
         moverFantasma();
 
     }while(!fimDeJogo());
@@ -135,19 +136,35 @@ int direcaoFantasma(int x, int y, int* destinox, int* destinoy){
     }
 }   
 
+//definindo o tamanho da explosao da funcao explodirPilula()
+void definirExplosaoPilula(){
+
+    if(!possuiPipula) return;
+
+    explodirPilula(pacman.x, pacman.y, 0, 1, 3);
+    explodirPilula(pacman.x, pacman.y, 0, -1, 3);
+    explodirPilula(pacman.x, pacman.y, 1, 0, 3);    
+    explodirPilula(pacman.x, pacman.y, -1, 0, 3);
+
+    possuiPipula = 0;
+}
+
 //funcao reursiva: explodindo a pipula que o pacman pegou no mapa
-void explodirPilula(int x, int y, int qtd){
+void explodirPilula(int x, int y, int somax, int somay, int qtd){
     
     //a funcao só para de se chamar quando o valor de "qtd" chegar a 0
     if(qtd == 0) return;
+
+    int novox = x + somax;
+    int novoy = y + somay;
     
-    if(!posicaoExistente(&m, x, y)) return;
-    if(encontrarParede(&m, x, y)) return;
+    if(!posicaoExistente(&m, novox, novoy)) return;
+    if(encontrarParede(&m, novox, novoy)) return;
 
     //apagando posicao a direita do pacman
-    m.matriz[x][y+1] = VAZIO;
+    m.matriz[novox][novoy] = VAZIO;
 
     //chamando a propria funcao e diminuindo o valor de qtd
-    explodirPilula(x, y+1, qtd-1);
+    explodirPilula(novox, novoy, somax, somay, qtd - 1);
         
 }
