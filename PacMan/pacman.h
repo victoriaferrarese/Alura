@@ -9,4 +9,5 @@ int fimDeJogo();
 void moverPacman(char direcao);
 void moverFantasma();
 int direcaoFantasma(int x, int y, int* destinox, int* destinoy);
-void explodirPilula(int x, int y, int qtd);
+void explodirPilula(int x, int y, int somax, int somay, int qtd);
+void definirExplosaoPilula();

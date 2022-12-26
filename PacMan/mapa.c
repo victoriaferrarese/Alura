@@ -3,8 +3,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "pacman.h"
-#include "mapa.h"
+#include "ui.h"
+#include "mapa.h" 
 
 /* A variavel m (tipo MAPA) eh declarada no main, sendo assim esse arquivo nao a reconhece a nao ser que seja passado, como parametro, o endereco de memoria dela para cada funcao que ira acessa-la. Ex:
 Main:
@@ -76,14 +78,6 @@ void liberarMapa(MAPA* m){
     }
     //liberando as linhas
     free(m->matriz);
-}
-
-//Imprime o mapa (linha por linha)
-void imprimirMapa(MAPA* m){
-
-    for(int i = 0; i < m->linhas; i++){
-        printf("%s\n", m->matriz[i]);
-    }
 }
 
 //identificando a posicao atual do pacman no mapa
