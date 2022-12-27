@@ -10,9 +10,11 @@ Dessa forma, no "mapa.h" preciso usar o "#ifndef _MAPA_H_" (le-se: if not define
 
 #ifndef _UI_H_
 #define _UI_H
+
 #include "mapa.h"
 
 void imprimirparte(char desenho[4][7], int parte);
 void imprimirMapa(MAPA* m);
+void imprimirResultado(int ganhou, int perdeu);
 
 #endif

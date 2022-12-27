@@ -1,12 +1,7 @@
 //ui: user interface
 
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-#include "pacman.h"
 #include "mapa.h" 
-#include "ui.h"
 
 char desenhoparede[4][7] = {
     {"......" },
@@ -43,6 +38,12 @@ char desenhovazio[4][7] = {
     {"      "}
 };
 
+//imprimindo as linhas do ui.h
+void imprimirparte(char desenho[4][7], int parte){
+
+    printf("%s", desenho[parte]);
+}
+
 //Imprime o mapa (linha por linha)
 void imprimirMapa(MAPA* m){
 
@@ -52,7 +53,7 @@ void imprimirMapa(MAPA* m){
         //para cada linha do modelo (mapa.txt), serao 4 linhas novas como mostra o ui.h
         for(int parte = 0; parte < 4; parte++){
 
-            for(int j = 0; i < m->colunas;j++){
+            for(int j = 0; j < m->colunas; j++){
                 
                 switch(m->matriz[i][j]){
                     case FANTASMA:
@@ -65,6 +66,8 @@ void imprimirMapa(MAPA* m){
 
                     //esse case aceita as duas opcoes:
                     case PAREDE_HORIZONTAL:
+                        imprimirparte(desenhoparede, parte);
+                        break;
                     case PAREDE_VERTICAL:
                         imprimirparte(desenhoparede, parte);
                         break;
@@ -82,9 +85,14 @@ void imprimirMapa(MAPA* m){
         }
     }   
 }
+void imprimirResultado(int ganhou, int perdeu){
+    if(ganhou = 1){
+        printf("PARABENS, VOCE GANHOU!!");
+        return;
+    }
+    else if (perdeu = 1){
+        printf("VOCE PERDEU :(");
+        return;
 
-//imprimindo as linhas do ui.h
-void imprimirparte(char desenho[4][7], int parte){
-    printf("%s", desenho[parte]);
-    
+    }
 }

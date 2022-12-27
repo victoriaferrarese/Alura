@@ -108,11 +108,11 @@ int posicaoExistente(MAPA* m, int x, int y){
     return 1;
 }
 
-//verifica se a proxima posicao do pacman eh um local disponivel (nao eh uma parede)
+/*//verifica se a proxima posicao do pacman eh um local disponivel (nao eh uma parede)
 int posicaoDisponivel(MAPA* m, int x, int y){
     
     return m->matriz[x][y] == VAZIO; //retorna verdadeiro se a condicao for verdadeira 
-}
+}*/
 
 //retornando se o movimento eh valido: a posicao existe na matriz, nao eh uma matriz 
 int movimentoValido(MAPA* m, int x, int y, char personagem){

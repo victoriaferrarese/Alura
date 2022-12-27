@@ -14,35 +14,49 @@ POSICAO pacman; //declarando a variavel pacman do tipo posicao
 
 int possuiPipula = 0;
 
+int ganhou = 0;
+int perdeu= 0;
+
 int main(void){
 
     armazenarMapa(&m);
-    
     encontrarPacman(&m, &pacman, PACMAN);
     
     do{
 
-        printf("Pilulas: %s\n", (possuiPipula ? "SIM" : "NAO"));
+        printf("Pilula: %s\n", (possuiPipula ? "SIM" : "NAO"));
         imprimirMapa(&m);
         
         char comando;
         scanf(" %c", &comando);
         
-        moverPacman(comando);
+        if(direcaoValida(comando)) moverPacman(comando);
         if(comando == BOMBA) definirExplosaoPilula();
+
         moverFantasma();
 
     }while(!fimDeJogo());
+
+    imprimirResultado(ganhou, perdeu);
 
     liberarMapa(&m);
 }
 
 //fim de jogo
 int fimDeJogo(){
-    POSICAO pos; //criado somente porque a funcao encontrarPacMan precisa de um parametro desse
-    int pacmanExiste = encontrarPacman(&m, &pos, PACMAN);
+    POSICAO pos; //criado somente porque a funcao encontrarPacMan precisa de um parametro desse tipo
 
-    return !pacmanExiste; //se o pacman morreu o jogo acaba
+    //o jogo acaba se o pacman ou os fantasmas morrerem
+    if(!encontrarPacman(&m, &pos, PACMAN)){
+        perdeu = 1;
+        return 1;
+    }
+    if(!encontrarPacman(&m, &pos, FANTASMA)){
+        ganhou = 1;
+        return 1;
+    }
+
+    return 0;
 }
 
 //declarando as possiveis direcoes para o Pacman
@@ -52,9 +66,6 @@ int direcaoValida(char direcao){
 
 //movendo o pacman de acordo com os comandos do usuario
 void moverPacman(char direcao){
-
-    if(!direcaoValida(direcao))
-        return;
 
     int proximox = pacman.x;
     int proximoy = pacman.y;
@@ -125,7 +136,7 @@ int direcaoFantasma(int x, int y, int* destinox, int* destinoy){
     for(int i = 0; i < 10; i++){
         int posicao = rand() % 4;
 
-        if(movimentoValido(&m, opcoes[posicao][0], opcoes[posicao][1], FANTASMA)){
+        if(movimentoValido(&m, opcoes[posicao][0], opcoes[posicao][1], FANTASMA)&& !encontrarPersonagem(&m, opcoes[posicao][0], opcoes[posicao][1], PILULA)){
 
             //destinox e destinoy recebem as coordenadas da prox posicao do fantasma
             *destinox = opcoes[posicao][0];
