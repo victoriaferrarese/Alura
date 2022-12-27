@@ -37,7 +37,7 @@ int main(void){
 
     }while(!fimDeJogo());
 
-    imprimirResultado(ganhou, perdeu);
+    imprimirResultado(ganhou);
 
     liberarMapa(&m);
 }
@@ -50,8 +50,7 @@ int fimDeJogo(){
     if(!encontrarPacman(&m, &pos, PACMAN)){
         perdeu = 1;
         return 1;
-    }
-    if(!encontrarPacman(&m, &pos, FANTASMA)){
+    }else if(!encontrarPacman(&m, &pos, FANTASMA)){
         ganhou = 1;
         return 1;
     }

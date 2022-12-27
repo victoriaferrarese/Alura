@@ -85,14 +85,10 @@ void imprimirMapa(MAPA* m){
         }
     }   
 }
-void imprimirResultado(int ganhou, int perdeu){
-    if(ganhou = 1){
-        printf("PARABENS, VOCE GANHOU!!");
-        return;
-    }
-    else if (perdeu = 1){
-        printf("VOCE PERDEU :(");
-        return;
-
+void imprimirResultado(int ganhou){
+    if(ganhou == 0){
+        printf("\n\nVOCE PERDEU :(\n\n");
+    }else{
+        printf("\n\nPARABENS, VOCE GANHOU!!\n\n");
     }
 }
