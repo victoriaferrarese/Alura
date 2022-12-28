@@ -44,7 +44,6 @@ void alocarMapa(MAPA* m);
 void liberarMapa(MAPA* m);
 int encontrarPacman(MAPA* m, POSICAO* p, char c);
 int posicaoExistente(MAPA* m, int x, int y);
-//int posicaoDisponivel(MAPA* m, int x, int y);
 int movimentoValido(MAPA* m, int x, int y, char personagem);
 int encontrarParede(MAPA* m, int x , int y);
 int encontrarPersonagem(MAPA* m, int x, int y, char personagem);
