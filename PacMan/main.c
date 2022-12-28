@@ -159,7 +159,7 @@ void definirExplosaoPilula(){
     possuiPipula = 0;
 }
 
-//funcao reursiva: explodindo a pipula que o pacman pegou no mapa
+//funcao recursiva: explodindo a pipula que o pacman pegou no mapa
 void explodirPilula(int x, int y, int somax, int somay, int qtd){
     
     //a funcao só para de se chamar quando o valor de "qtd" chegar a 0
